@@ -93,8 +93,7 @@ button { font: 600 15px/22px var(--sans); color: var(--oxblood); background: tra
 .levels tbody th { font-weight: 400; color: var(--caption); white-space: nowrap; width: 48px; }
 .levels .num { white-space: nowrap; }
 .plus5 { display: block; font-size: 13px; line-height: 18px; color: var(--caption); }
-.levels.has-pick tbody tr { opacity: 0.55; }
-.levels.has-pick tbody tr.is-picked { opacity: 1; background: var(--stat); font-weight: 600; }
+.levels.has-pick tbody tr.is-picked { background: var(--stat); font-weight: 600; }
 .levels tr.is-picked th { color: var(--oxblood); font-weight: 600; padding-left: var(--space-2); }
 .levels tr.is-picked .plus5 { font-weight: 400; }
 
