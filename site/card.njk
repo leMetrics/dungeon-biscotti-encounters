@@ -7,8 +7,8 @@ pagination:
 permalink: "cards/{{ card.id }}/"
 script: /assets/level.js
 eleventyComputed:
-  title: "{{ card.title }}"
-  description: "{{ card.hook }}"
+  title: "{{ card.title | safe }}"
+  description: "{{ card.hook | safe }}"
 ---
 <article class="card">
   <h1 class="card-title">{{ card.title }}</h1>

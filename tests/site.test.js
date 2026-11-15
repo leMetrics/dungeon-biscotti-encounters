@@ -80,3 +80,9 @@ test('links and assets respect the path prefix', () => {
   assert.match(prefixed, /href="\/dungeon-biscotti-encounters\/assets\/style\.css"/);
   assert.ok(fs.existsSync(path.join(prefixedOut, 'assets', 'fonts', 'alegreya-700.woff2')));
 });
+
+test('quotes in a hook are escaped once in the description', () => {
+  const page = read(out, 'cards', 'wrong-ambush', 'index.html');
+  assert.match(page, /<meta name="description" content="[^"]*&quot;Purses on the ground/);
+  assert.doesNotMatch(page, /&amp;(quot|#39|amp);/);
+});
