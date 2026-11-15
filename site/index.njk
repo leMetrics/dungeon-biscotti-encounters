@@ -1,0 +1,52 @@
+---
+layout: base.njk
+title: Dungeon Biscotti Encounters
+description: Ready-to-run D&D 2024 encounters. Every one works at levels 1 to 5 and every one has a twist.
+script: /assets/filter.js
+permalink: /
+---
+<section class="intro">
+  <h1>Pick a card, pick your table's level</h1>
+  <p>Ready-to-run encounters for D&amp;D 2024. Every one works at levels 1 to 5, for 4 or 5 players, and every one has a twist. Open a card, choose your level, and you're ready to run it.</p>
+</section>
+
+<form class="filters" hidden>
+  <label class="search">Search
+    <input type="search" name="q" placeholder="bridge, wolves, auction" autocomplete="off">
+  </label>
+  <fieldset>
+    <legend>Type</legend>
+    {% for t in facets.types %}<label class="chip"><input type="checkbox" name="type" value="{{ t.id }}"><span>{{ t.label }}</span></label>{% endfor %}
+  </fieldset>
+  <fieldset>
+    <legend>Twist</legend>
+    {% for t in facets.twists %}<label class="chip"><input type="checkbox" name="twist" value="{{ t.id }}"><span>{{ t.label }}</span></label>{% endfor %}
+  </fieldset>
+  <fieldset>
+    <legend>Terrain</legend>
+    {% for t in facets.terrains %}<label class="chip"><input type="checkbox" name="terrain" value="{{ t }}"><span>{{ t }}</span></label>{% endfor %}
+  </fieldset>
+  <fieldset>
+    <legend>Length</legend>
+    <label class="chip"><input type="checkbox" name="short" value="30"><span>30 min or less</span></label>
+  </fieldset>
+</form>
+
+<p class="count" aria-live="polite"><span data-count>{{ cards | length }}</span> encounters</p>
+
+<ul class="card-list">
+  {% for card in cards %}
+  <li data-type="{{ card.type }}" data-terrain="{{ card.terrain | join(' ') }}" data-twist-type="{{ card.twist_type }}" data-duration="{{ card.duration }}">
+    <a href="{{ ('/cards/' + card.id + '/') | url }}">
+      <h2>{{ card.title }}</h2>
+      <p class="meta">{{ card.typeLabel }} · {{ card.duration }} min · {{ card.terrain | join(", ") }} · {{ card.twistLabel | lower }} twist</p>
+      <p class="hook">{{ card.hook }}</p>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+
+<div class="empty" hidden>
+  <p>No encounters match these filters.</p>
+  <button type="button" data-clear>Clear filters</button>
+</div>

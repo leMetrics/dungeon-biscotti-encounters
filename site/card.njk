@@ -1,0 +1,78 @@
+---
+layout: base.njk
+pagination:
+  data: cards
+  size: 1
+  alias: card
+permalink: "cards/{{ card.id }}/"
+script: /assets/level.js
+eleventyComputed:
+  title: "{{ card.title }}"
+  description: "{{ card.hook }}"
+---
+<article class="card">
+  <h1 class="card-title">{{ card.title }}</h1>
+  <p class="meta">{{ card.typeLabel }} · {{ card.duration }} min · {{ card.terrain | join(", ") }} · {{ card.twistLabel | lower }} twist</p>
+  <hr class="rule">
+
+  <section>
+    <h2>Hook</h2>
+    {{ card.html.hook | safe }}
+  </section>
+
+  <section>
+    <h2>Setup</h2>
+    {{ card.html.setup | safe }}
+  </section>
+
+  <p class="dm-note">Players, please don't open these. It's more fun that way.</p>
+  <details class="dm-only">
+    <summary>DM only: Twist</summary>
+    <div class="dm-body">{{ card.html.twist | safe }}</div>
+  </details>
+
+  <section class="scaling">
+    <h2>Scaling</h2>
+    <div class="level-picker" role="group" aria-label="Your table's level" hidden>
+      <span class="level-picker-label">Table level</span>
+      {% for line in card.levels %}<button type="button" data-pick="{{ line.level }}" aria-pressed="false">{{ line.level }}</button>{% endfor %}
+      <button type="button" data-pick="" class="level-all" aria-pressed="true">All</button>
+    </div>
+    <table class="levels">
+      <thead>
+        <tr><th scope="col">Level</th><th scope="col">Creatures (4 players)</th><th scope="col">DC</th>{% if card.hasHazard %}<th scope="col">Hazard</th>{% endif %}</tr>
+      </thead>
+      <tbody>
+        {% for line in card.levels %}
+        <tr data-level="{{ line.level }}">
+          <th scope="row">Lv {{ line.level }}</th>
+          <td>{{ line.roster }} <span class="plus5">5th player: {{ line.plus5 }}</span></td>
+          <td class="num">DC {{ line.dc }}</td>
+          {% if card.hasHazard %}<td class="num">{{ line.hazard }}</td>{% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Terrain and tactics</h2>
+    {{ card.html.tactics | safe }}
+  </section>
+
+  <section>
+    <h2>Ways out without a fight</h2>
+    {{ card.html.waysOut | safe }}
+  </section>
+
+  <details class="dm-only">
+    <summary>DM only: Ripple</summary>
+    <div class="dm-body">{{ card.html.ripple | safe }}</div>
+  </details>
+
+  <section>
+    <h2>Reskin notes</h2>
+    {{ card.html.reskin | safe }}
+  </section>
+</article>
+<p class="back"><a href="{{ '/' | url }}">All encounters</a></p>
